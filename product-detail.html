@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en" class="noto_sans_sc_18cc335c-module__FQgiLG__variable">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Aus Granny Flat - Product Detail</title>
+  <link rel="preload" href="/_next/static/media/feb57b2dc8f29018-s.p.2539f70a.woff2" as="font" crossorigin="" type="font/woff2"/>
+  <link rel="preload" as="image" href="/logo.png"/>
+  <link rel="stylesheet" href="/_next/static/chunks/5aac8d1fa93e4482.css" data-precedence="next"/>
+  <link rel="stylesheet" href="/_next/static/chunks/b5404be81e85c348.css" data-precedence="next"/>
+  <link rel="icon" href="/favicon.ico?favicon.0b3bf435.ico" sizes="256x256" type="image/x-icon"/>
+</head>
+<body class="noto_sans_sc_18cc335c-module__FQgiLG__variable antialiased font-sans">
+  <header class="fixed top-0 left-0 right-0 z-50 transition-all duration-500 bg-surface">
+    <nav class="mx-auto flex max-w-7xl items-center justify-center gap-10 px-6 py-5 lg:px-8">
+      <a class="flex items-center gap-3 group absolute left-6 lg:left-8 top-1/2 -translate-y-[40%]" href="/">
+        <img src="/logo.png" alt="Aus Granny Flat" class="h-20 w-auto object-contain"/>
+        <span class="text-lg font-light tracking-[0.2em] text-ink uppercase">Aus Granny Flat</span>
+      </a>
+      <div class="hidden md:flex items-center gap-6">
+        <a class="relative text-base font-semibold tracking-wide transition-colors duration-300 py-1 px-3 rounded-lg text-ink" href="/">Home</a>
+        <a class="relative text-base font-semibold tracking-wide transition-colors duration-300 py-1 px-3 rounded-lg text-ink" href="/products/granny-flat">Granny Flat</a>
+        <a class="relative text-base font-semibold tracking-wide transition-colors duration-300 py-1 px-3 rounded-lg text-ink" href="/contact">Contact Us</a>
+      </div>
+    </nav>
+  </header>
+
+  <main id="app" class="mx-auto max-w-7xl px-6 pt-32 pb-20 lg:px-8 min-h-screen">
+    <div id="loading" class="py-20 text-center text-ink/60">Loading…</div>
+  </main>
+
+  <footer class="border-t border-line bg-surface">
+    <div class="mx-auto max-w-7xl px-6 py-10 lg:px-8 text-sm text-ink/70 flex flex-col md:flex-row gap-4 md:items-center md:justify-between">
+      <div>© Aus Granny Flat. Professional Modular Home Design &amp; Manufacturing.</div>
+      <div class="flex gap-6">
+        <a href="/" class="hover:text-brand transition-colors">Home</a>
+        <a href="/products/granny-flat" class="hover:text-brand transition-colors">Granny Flat</a>
+        <a href="/contact" class="hover:text-brand transition-colors">Contact Us</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      var app = document.getElementById('app');
+      var loading = document.getElementById('loading');
+
+      function getProductId() {
+        var parts = window.location.pathname.split('/').filter(Boolean);
+        return parts[parts.length - 1] || '';
+      }
+
+      function esc(s) {
+        return String(s == null ? '' : s)
+          .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+      }
+
+      function specCard(label, value) {
+        return '' +
+          '<div class="rounded-xl border border-line bg-white p-5 text-center">' +
+            '<div class="text-2xl font-semibold text-ink">' + esc(value) + '</div>' +
+            '<div class="mt-1 text-sm text-ink/60">' + esc(label) + '</div>' +
+          '</div>';
+      }
+
+      function chevron(dir) {
+        // dir: 'left' or 'right'
+        var pts = dir === 'left' ? '15 18 9 12 15 6' : '9 18 15 12 9 6';
+        return '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="' + pts + '"></polyline></svg>';
+      }
+
+      function render(p) {
+        loading.remove();
+
+        var title = p.title_en || p.title_zh || '';
+        var subtitle = p.subtitle_en || p.subtitle_zh || '';
+        var desc = p.description_en || p.description_zh || '';
+        var gallery = [p.image_url].concat(p.additional_images || []).filter(Boolean);
+        var showThumbs = gallery.length >= 2;
+
+        // --- left: main image + arrows + thumbnails ---
+        var arrows = showThumbs
+          ? '<button id="prevBtn" type="button" aria-label="Previous image" class="absolute left-4 sm:left-6 top-1/2 -translate-y-1/2 w-14 h-14 rounded-full bg-white shadow-lg ring-1 ring-black/5 flex items-center justify-center text-ink hover:bg-brand hover:text-white transition-colors">' + chevron('left') + '</button>' +
+            '<button id="nextBtn" type="button" aria-label="Next image" class="absolute right-4 sm:right-6 top-1/2 -translate-y-1/2 w-14 h-14 rounded-full bg-white shadow-lg ring-1 ring-black/5 flex items-center justify-center text-ink hover:bg-brand hover:text-white transition-colors">' + chevron('right') + '</button>'
+          : '';
+
+        var thumbsHtml = showThumbs
+          ? gallery.map(function (g, i) {
+              var active = i === 0;
+              return '<button type="button" data-i="' + i + '" class="thumb aspect-[4/3] rounded-lg overflow-hidden border ' +
+                (active ? 'border-brand ring-2 ring-brand' : 'border-line') +
+                ' bg-ink/5">' +
+                '<img src="' + esc(g) + '" alt="' + esc(title) + '" class="w-full h-full object-cover" loading="lazy"/>' +
+                '</button>';
+            }).join('')
+          : '';
+
+        // --- right: info ---
+        var info = '' +
+          '<div class="h-1 w-12 bg-brand rounded mb-6"></div>' +
+          '<h1 class="text-3xl sm:text-4xl font-bold text-ink leading-tight">' + esc(title) + '</h1>' +
+          (subtitle ? '<p class="mt-3 text-base sm:text-lg text-brand leading-relaxed">' + esc(subtitle) + '</p>' : '') +
+          (desc ? '<p class="mt-6 text-ink/70 leading-relaxed">' + esc(desc) + '</p>' : '') +
+          '<div class="mt-8 grid grid-cols-3 gap-4">' +
+            specCard('Area', p.area || '-') +
+            specCard('Bedrooms', p.bedrooms != null ? p.bedrooms : '-') +
+            specCard('Bathrooms', p.bathrooms != null ? p.bathrooms : '-') +
+          '</div>' +
+          '<div class="mt-8 flex flex-col sm:flex-row gap-4">' +
+            '<a href="/contact" class="flex-1 text-center rounded-lg bg-brand px-6 py-3.5 text-white font-semibold hover:opacity-90 transition-opacity">Get Quote</a>' +
+            '<a href="/products/granny-flat" class="flex-1 text-center rounded-lg bg-white border border-line px-6 py-3.5 text-ink font-semibold hover:bg-ink/5 transition-colors">View All Granny Flat Products</a>' +
+          '</div>';
+
+        var html = '' +
+          '<nav class="text-sm text-ink/50 mb-6">' +
+            '<a href="/" class="hover:text-brand">Home</a> / ' +
+            '<a href="/products/granny-flat" class="hover:text-brand">Granny Flat</a> / ' +
+            '<span class="text-ink/80">' + esc(p.title_en || p.title_zh || '') + '</span>' +
+          '</nav>' +
+          '<div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14">' +
+            '<div>' +
+              '<div class="relative aspect-[3/2] bg-ink/5 border border-line overflow-hidden rounded-xl">' +
+                '<img id="mainImg" src="' + esc(gallery[0]) + '" alt="' + esc(title) + '" class="w-full h-full object-cover"/>' +
+                arrows +
+              '</div>' +
+              (showThumbs
+                ? '<div class="mt-4 grid grid-cols-3 gap-3">' + thumbsHtml + '</div>'
+                : '') +
+            '</div>' +
+            '<div class="flex flex-col justify-center">' + info + '</div>' +
+          '</div>';
+
+        app.innerHTML = html;
+
+        // --- gallery navigation ---
+        var current = 0;
+        var mainImg = document.getElementById('mainImg');
+
+        function setIndex(i) {
+          var n = gallery.length;
+          current = (i % n + n) % n;
+          mainImg.src = gallery[current];
+          app.querySelectorAll('.thumb').forEach(function (b, idx) {
+            if (idx === current) {
+              b.className = 'thumb aspect-[4/3] rounded-lg overflow-hidden border border-brand ring-2 ring-brand bg-ink/5';
+            } else {
+              b.className = 'thumb aspect-[4/3] rounded-lg overflow-hidden border border-line bg-ink/5';
+            }
+          });
+        }
+
+        if (showThumbs) {
+          var prev = document.getElementById('prevBtn');
+          var next = document.getElementById('nextBtn');
+          prev.addEventListener('click', function () { setIndex(current - 1); });
+          next.addEventListener('click', function () { setIndex(current + 1); });
+          app.querySelectorAll('.thumb').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+              setIndex(parseInt(btn.getAttribute('data-i'), 10));
+            });
+          });
+        }
+
+        document.title = 'Aus Granny Flat - ' + title;
+      }
+
+      function renderNotFound() {
+        loading.remove();
+        app.innerHTML = '<div class="py-20 text-center">' +
+          '<h1 class="text-2xl font-bold text-ink">Product not found</h1>' +
+          '<p class="mt-3 text-ink/60">The model you are looking for does not exist.</p>' +
+          '<a href="/products/granny-flat" class="inline-block mt-6 rounded-lg bg-brand px-6 py-3 text-white font-semibold hover:opacity-90">Back to Granny Flat</a>' +
+          '</div>';
+      }
+
+      var id = getProductId();
+      fetch('/api/admin/products?category=granny-flat')
+        .then(function (r) { return r.json(); })
+        .then(function (data) {
+          var list = (data && data.products) || [];
+          var p = list.filter(function (x) { return x.id === id; })[0];
+          if (p) { render(p); } else { renderNotFound(); }
+        })
+        .catch(function () { renderNotFound(); });
+    })();
+  </script>
+</body>
+</html>

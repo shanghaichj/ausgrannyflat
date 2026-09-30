@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aus Granny Flat — Product Configuration (Customer Version)</title>
+<style>
+  :root{
+    --primary:#2c5f4f;
+    --primary-dark:#1f4438;
+    --accent:#c2894e;
+    --bg:#f5f3ee;
+    --card:#ffffff;
+    --border:#e2ddd2;
+    --text:#2b2b2b;
+    --muted:#6b6b6b;
+    --optional:#7a5b3a;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"PingFang SC","Microsoft YaHei",sans-serif;
+    background:var(--bg);color:var(--text);line-height:1.55;
+  }
+  header{
+    position:sticky;top:0;z-index:50;background:var(--primary);color:#fff;
+    padding:0.9rem 1rem;box-shadow:0 2px 8px rgba(0,0,0,.15);
+  }
+  header h1{margin:0;font-size:1.05rem;font-weight:600;letter-spacing:.3px;}
+  header .sub{font-size:.78rem;opacity:.9;margin-top:.15rem;}
+  header .sub a{color:#ffe9c7;text-decoration:none;border-bottom:1px dashed #ffe9c7;}
+  header .sub a:hover{color:#fff;}
+  .controls{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.6rem;}
+  .controls input,.controls select{
+    padding:.45rem .6rem;border-radius:6px;border:1px solid rgba(255,255,255,.35);
+    background:rgba(255,255,255,.12);color:#fff;font-size:.85rem;min-width:0;
+  }
+  .controls input::placeholder{color:rgba(255,255,255,.7);}
+  .controls input{flex:1 1 180px;}
+  nav{
+    position:sticky;top:0;z-index:40;background:var(--primary-dark);
+    padding:.4rem .6rem;display:flex;gap:.4rem;overflow-x:auto;white-space:nowrap;
+    -webkit-overflow-scrolling:touch;
+  }
+  nav a{
+    color:#e9f0ec;text-decoration:none;font-size:.78rem;padding:.3rem .7rem;
+    border-radius:20px;background:rgba(255,255,255,.08);flex:0 0 auto;
+  }
+  nav a:hover{background:rgba(255,255,255,.2);}
+  nav a.opt{background:rgba(194,137,78,.25);}
+  main{max-width:1100px;margin:0 auto;padding:1rem;}
+  .section{margin-bottom:2rem;scroll-margin-top:120px;}
+  .section h2{
+    font-size:1.1rem;color:var(--primary);border-left:4px solid var(--accent);
+    padding-left:.6rem;margin:.4rem 0 1rem;display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;
+  }
+  .section h2 .cn{font-size:.85rem;color:var(--muted);font-weight:400;}
+  .section h2 .tag{font-size:.68rem;background:var(--accent);color:#fff;padding:.1rem .5rem;border-radius:10px;}
+  .tablewrap{overflow-x:auto;border:1px solid var(--border);border-radius:10px;background:var(--card);}
+  table{width:100%;border-collapse:collapse;font-size:.86rem;}
+  thead th{
+    background:var(--primary);color:#fff;text-align:left;padding:.6rem .7rem;
+    font-weight:600;position:sticky;top:0;white-space:nowrap;
+  }
+  tbody td{padding:.55rem .7rem;border-bottom:1px solid var(--border);vertical-align:top;}
+  tbody tr:nth-child(even){background:#faf8f3;}
+  tbody tr:hover{background:#f0ede4;}
+  td .no{font-weight:700;color:var(--primary);}
+  td .cls{font-weight:600;}
+  @media (max-width:768px){
+    header h1{font-size:.98rem;}
+    main{padding:.6rem;}
+    .tablewrap{border:none;background:transparent;}
+    table,thead,tbody,tr,td{display:block;width:100%;}
+    thead{display:none;}
+    tbody tr{
+      background:var(--card);border:1px solid var(--border);border-radius:10px;
+      margin-bottom:.85rem;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.05);
+    }
+    tbody tr:nth-child(even){background:var(--card);}
+    tbody td{
+      display:flex;justify-content:space-between;gap:.8rem;align-items:flex-start;
+      padding:.5rem .8rem;border-bottom:1px solid #eee;text-align:right;
+    }
+    tbody td:last-child{border-bottom:none;}
+    tbody td::before{
+      content:attr(data-label);font-weight:700;color:var(--primary);
+      text-align:left;flex:0 0 32%;font-size:.78rem;
+    }
+    td .no{font-size:1rem;}
+  }
+  footer{
+    text-align:center;font-size:.75rem;color:var(--muted);padding:1.5rem;
+    border-top:1px solid var(--border);margin-top:1rem;
+  }
+  footer a{color:var(--primary);text-decoration:none;}
+  .count{font-size:.75rem;color:var(--muted);margin:.2rem 0 .8rem;}
+  .empty{text-align:center;color:var(--muted);padding:2rem;font-size:.9rem;}
+</style>
+</head>
+<body>
+<header>
+  <h1>Aus Granny Flat · Product Configuration</h1>
+  <div class="sub">Customer Version · 澳洲奶奶房交付标准（客户版） · <a href="index.html">Builder Version ↗</a></div>
+  <div class="controls">
+    <input id="search" type="text" placeholder="Search components, descriptions…">
+    <select id="filter">
+      <option value="all">All categories</option>
+      <option value="standard">Standard layout</option>
+      <option value="optional">Optional</option>
+    </select>
+  </div>
+</header>
+<nav id="nav"></nav>
+<main id="content"></main>
+<footer>
+  Customer-friendly configuration table generated from Delivery Standard (Customer Version, EN).<br>
+  For full technical specs &amp; Australian Standards, see the <a href="index.html">Builder Version</a>.<br>
+  © Aus Granny Flat
+</footer>
+
+<script>
+const DATA = [
+  { id:"s1", cat:"Structural Main Body", cn:"结构主体", type:"standard", items:[
+    {no:"1-1",cls:"Steel column",desc:"Hot-dip galvanized structural steel columns designed for building main frames; fully Australian Standard certified."},
+    {no:"1-2",cls:"Girder steel",desc:"Hot-dip galvanized structural steel beams, suitable for floor and roof frames; fully Australian Standard certified."},
+    {no:"1-3",cls:"Lightgage steel joist",desc:"Australian-standard light-gauge steel wall frame; galvanized anti-corrosion, termite-resistant, non-combustible."},
+    {no:"1-4",cls:"High-strength screws and nuts",desc:"Main frame constructed using hot-dip galvanized high-strength structural bolts; marine-grade stainless steel available as coastal upgrade."},
+    {no:"1-5",cls:"General-purpose building fasteners",desc:"Corrosion-resistant self-drilling screws with sealing rubber gaskets; stainless steel available as coastal upgrade."}
+  ]},
+  { id:"s2", cat:"Exterior wall", cn:"外墙", type:"standard", items:[
+    {no:"2-1",cls:"Cement fiber external cladding panel",desc:"High-quality weather-resistant cement fiber exterior cladding — fireproof and termite-resistant; variety of colors and textures."},
+    {no:"2-2",cls:"Waterproof Breathable Membrane",desc:"Breathable exterior wall waterproofing liner; protects against wind/rain while keeping the wall cavity breathable and reducing condensation risk."},
+    {no:"2-3",cls:"OSB Oriented Strand Board",desc:"Structural-grade OSB for shear resistance of exterior walls; suited to Australian climatic conditions."},
+    {no:"2-4",cls:"Wall insulation glass wool",desc:"High-performance glass wool insulation with aluminum foil reflective layer; compliant with Australian energy efficiency standards (rated R-value)."}
+  ]},
+  { id:"s3", cat:"Interior wall", cn:"内墙", type:"standard", items:[
+    {no:"3-1",cls:"Standard gypsum board (dry zone)",desc:"Standard 10 mm gypsum board for interior dry-wall applications."},
+    {no:"3-2",cls:"Interior Wall Latex Paint",desc:"Matte acrylic latex paint — one coat primer + two topcoats; M2 mold-resistant, low VOC."},
+    {no:"3-3",cls:"SPC wall panels (optional)",desc:"5 mm SPC decorative wall panel, interior finishing material."},
+    {no:"3-4",cls:"OSB oriented strand board (optional)",desc:"9 mm structural OSB as substrate for SPC wall panels."},
+    {no:"3-5",cls:"Interior wall soundproofing glass wool",desc:"Non-faced sound-insulating glass wool for interior partition walls."}
+  ]},
+  { id:"s4", cat:"Interior walls (bathroom)", cn:"内墙-浴室", type:"standard", items:[
+    {no:"4-1",cls:"Cement fiberboard (FC board)",desc:"9 mm Type A cement fiberboard for wet-area walls; mandatory for shower areas."},
+    {no:"4-2",cls:"Wall Tiles",desc:"300×600 mm wall tiles for bathrooms and laundries; installed per AS 3958.1 code."},
+    {no:"4-3",cls:"Flexible Tile Adhesive (for bathrooms)",desc:"C2S1 flexible adhesive for wet areas over FC board on steel framing."},
+    {no:"4-4",cls:"SPC wall panels (optional)",desc:"5 mm SPC decorative wall panel, interior finishing material."},
+    {no:"4-5",cls:"Shower Room Glass Partition",desc:"10 mm Class A tempered safety glass partition; standard height 2000 mm; 316 marine-grade stainless hardware."},
+    {no:"4-6",cls:"Acrylic Wet Zone Waterproof Coating",desc:"Two-component acrylic waterproof coating; dry film ≥1.2 mm; shower wall rise ≥1800 mm."}
+  ]},
+  { id:"s5", cat:"Floor", cn:"地面", type:"standard", items:[
+    {no:"5-1",cls:"Cement fiberboard (FC board)",desc:"18 mm Class A cement fiber lining; bathroom floor base plate."},
+    {no:"5-2",cls:"SPC flooring with noise-reducing underlay",desc:"SPC decorative flooring with integrated IXPE sound-insulating underlayment."},
+    {no:"5-3",cls:"Floor tiles (bathroom)",desc:"Ceramic tiles for wet areas in bathrooms and laundries; various sizes available."},
+    {no:"5-4",cls:"Flexible Tile Adhesive (for bathrooms)",desc:"C2S1 flexible adhesive for wet areas of FC substrate in light-gauge steel systems."},
+    {no:"5-5",cls:"Acrylic Wet Zone Waterproof Coating",desc:"Two-component acrylic waterproof coating; dry film ≥1.2 mm; shower wall rise ≥1800 mm."},
+    {no:"5-7",cls:"Sealant (Building Sealant)",desc:"Outdoor/metal flashing: neutral silicone weather sealant; indoor/wet areas: M2 mold-resistant acrylic sealant."}
+  ]},
+  { id:"s6", cat:"Furred ceiling", cn:"吊顶", type:"standard", items:[
+    {no:"6-1",cls:"Standard gypsum board (dry zone)",desc:"10 mm standard gypsum board for dry-area ceilings."},
+    {no:"6-2",cls:"Latex paint (dry zone)",desc:"Dry-zone ceiling coating: closed primer + two topcoats."},
+    {no:"6-3",cls:"Aluminum panel tiles (for bathrooms)",desc:"Corrosion-resistant clip-in aluminum ceiling; 300×600 mm."},
+    {no:"6-4",cls:"Ceiling Truss System",desc:"Hot-dip galvanized light-gauge steel T-grid keel + hanging rods."}
+  ]},
+  { id:"s7", cat:"Roof", cn:"屋顶", type:"standard", items:[
+    {no:"7-1",cls:"Roof insulation glass wool",desc:"Single-sided foil vapor-barrier glass wool for wall and roof insulation."},
+    {no:"7-2",cls:"OSB Oriented Strand Board",desc:"Weather-resistant OSB for roofing and wall construction."},
+    {no:"7-3",cls:"PU Insulated Panel",desc:"PU thermal insulation sandwich panel; improves roof thermal performance."},
+    {no:"7-4",cls:"Roof waterproofing sealant",desc:"Non-permeable flexible roof underlay beneath roofing; proper longitudinal overlap per codes."},
+    {no:"7-5",cls:"Al-Mg-Mn upright-lock edge roof (Material 1)",desc:"Al-Mg-Mn alloy vertical-lock metal roofing; polyester coating; colors on request."},
+    {no:"7-6",cls:"Asphalt Shingles (Material 2)",desc:"Double-layer fiberglass asphalt shingle roof on OSB + underlay; various colors."},
+    {no:"7-7",cls:"Wavy color-coated steel tiles (Material 3)",desc:"Corrugated color-coated steel roof covering; various colors."},
+    {no:"7-8",cls:"Roof eave flashing / canopy base",desc:"Asbestos-free cement fiber eave flashing; ventilated variant available."},
+    {no:"7-9",cls:"Rain gutter (eave gutter)",desc:"Quad-type metal gutter with standard drainage slope."},
+    {no:"7-10",cls:"Downspout",desc:"Rectangular downspout; same color as gutter."},
+    {no:"7-11",cls:"Wall flashing (wall top flashing)",desc:"Steel wall flashing at wall-roof junctions."}
+  ]},
+  { id:"s8", cat:"Doors and windows", cn:"门窗", type:"standard", items:[
+    {no:"8-1",cls:"Entrance door",desc:"3-point anti-theft lock, double sealing strips, DPC moisture treatment; glass slider with Grade A safety tempered glass."},
+    {no:"8-2",cls:"Bedroom Door",desc:"Hollow composite interior door; bearing hinges; standard lock; standard residential dimensions."},
+    {no:"8-3",cls:"Bathroom Door",desc:"Solid composite interior door with privacy lock."},
+    {no:"8-4",cls:"Aluminium alloy window",desc:"Insulated aluminum windows (sliding or awning); double-glazed tempered glass (lower pane Grade A for WERS); wind pressure per project."},
+    {no:"8-5",cls:"Aluminum alloy awning",desc:"Aluminum awning with insect-proof mesh for roof ventilation."}
+  ]},
+  { id:"s9", cat:"Water supply and drainage", cn:"给排水", type:"standard", items:[
+    {no:"9-1",cls:"Supply pipe",desc:"WaterMark certified PEX hot/cold pipes; Type B copper optional upgrade."},
+    {no:"9-2",cls:"Drain-pipe",desc:"WaterMark certified PVC-U drainage; each fixture has a trap for odor prevention."},
+    {no:"9-3",cls:"Stopcock",desc:"Copper ceramic-valve mixer faucet, chrome; WELS 4-star+; bubble generator."},
+    {no:"9-4",cls:"Floor drain",desc:"Stainless floor drain with qualified water seal; high-flow in shower area."},
+    {no:"9-5",cls:"Valve",desc:"Brass ball valve on main inlet and each branch; handle switch; independent control."},
+    {no:"9-6",cls:"Shower Basin (with mirror)",desc:"Wall-mounted vanity, seamless ceramic basin, stainless drain; E0 moisture-resistant cabinet."},
+    {no:"9-7",cls:"Water closet",desc:"Dual-flush integrated toilet; WELS 4-star."},
+    {no:"9-8",cls:"Showers",desc:"Chrome copper shower kit with thermostatic valve, riser, hand shower; WELS 3-star+."}
+  ]},
+  { id:"s10", cat:"Electrical", cn:"电气", type:"standard", items:[
+    {no:"10-1",cls:"Distribution box",desc:"Main switch + MCB/RCBO circuit protection; surface or concealed install."},
+    {no:"10-2",cls:"General / Local Bonding Box",desc:"Equipotential bonding terminal boxes; bathroom local bonding between metal pipes and fixtures for safety."},
+    {no:"10-3",cls:"Wire",desc:"Single-core PVC-insulated wires per Australian standards; lighting/socket/AC/heater specs; color-coded."},
+    {no:"10-4",cls:"Miniature Circuit Breaker",desc:"C-type MCB overload protection per circuit; rail-mounted; Australian standards."},
+    {no:"10-5",cls:"Leakage protection circuit breaker",desc:"30 mA RCBO; mandatory for damp areas (bathroom/kitchen/outdoor)."},
+    {no:"10-6",cls:"Switch",desc:"Australian Type 86 wall switch, SAA certified, silver-alloy contacts; 1/2/3-gang; white PC."},
+    {no:"10-7",cls:"Power socket",desc:"SAA 10A Australian socket; switched upgrade in kitchen/damp areas; height per standards."},
+    {no:"10-8",cls:"Low-voltage socket",desc:"Network/phone/TV low-voltage sockets; independent LV wiring; separated from HV."},
+    {no:"10-9",cls:"Lighting fixtures",desc:"SAA indoor LED ceiling lights for dry areas; ≥1 per room/porch."},
+    {no:"10-10",cls:"Bathroom Lights",desc:"IP44 waterproof LED ceiling light; RCD protected; humid-environment safe."},
+    {no:"10-11",cls:"Exhaust fan",desc:"Bathroom/laundry IP44 waterproof exhaust fan; ducts directly outdoors."}
+  ]},
+  { id:"s11", cat:"Closet & Kitchen Cabinets", cn:"橱柜系统", type:"standard", items:[
+    {no:"11-1",cls:"Bedroom Wardrobe",desc:"Floor-standing wardrobe; hanging rod, shelves, dividers; swing/sliding door; E0 panel; zinc hinges; silent tracks."},
+    {no:"11-2",cls:"Kitchen Cabinet Unit",desc:"Floor + wall cabinets; E0 moisture-resistant panels; moisture-proof hardware; engineered stone top."},
+    {no:"11-3",cls:"Water channel (sink)",desc:"304 stainless steel sink with WaterMark drain kit."},
+    {no:"11-4",cls:"Cooker hood",desc:"Pipeline-type range hood."}
+  ]},
+  { id:"o1", cat:"Porticus (Optional)", cn:"门廊（可选）", type:"optional", items:[
+    {no:"1-1",cls:"Galleria roof & steel support",desc:"Porch roof and steel supports consistent with the main roof system."},
+    {no:"1-2",cls:"WPC Outdoor Deck Flooring",desc:"Weather-resistant WPC wood-plastic composite deck flooring."},
+    {no:"1-3",cls:"Deck Steel Structure Support",desc:"Hot-dip galvanized steel deck frame; corrosion/termite-proof, non-combustible."},
+    {no:"1-4",cls:"Deck Metal Railings",desc:"Powder-coated aluminum deck railing; various colors."}
+  ]},
+  { id:"o2", cat:"Furniture (Optional)", cn:"家具（可选）", type:"optional", items:[
+    {no:"2-1",cls:"Bedroom Bed",desc:"Solid wood bed frame + crossbars; eco finish; rust-proof hardware; no mattress."},
+    {no:"2-2",cls:"Living Room Sofa",desc:"Solid wood frame; fabric; high-density foam; flame-retardant treatment."},
+    {no:"2-3",cls:"Tableware & Chairs",desc:"Solid wood frame; eco finish; fabric cushions; rust-proof connectors."}
+  ]}
+];
+
+const COLS = [
+  {key:"no",  label:"No."},
+  {key:"cls", label:"Component"},
+  {key:"desc",label:"Description"}
+];
+
+function render(){
+  const filter = document.getElementById('filter').value;
+  const q = document.getElementById('search').value.trim().toLowerCase();
+  const content = document.getElementById('content');
+  const nav = document.getElementById('nav');
+  content.innerHTML='';
+  nav.innerHTML='';
+  let total=0;
+
+  DATA.forEach(sec=>{
+    if(filter!=='all' && sec.type!==filter) return;
+    const items = sec.items.filter(it=>{
+      if(!q) return true;
+      return COLS.some(c => String(it[c.key]||'').toLowerCase().includes(q));
+    });
+    if(items.length===0) return;
+    total+=items.length;
+
+    const a=document.createElement('a');
+    a.href='#'+sec.id;
+    a.textContent=sec.cat;
+    if(sec.type==='optional') a.className='opt';
+    nav.appendChild(a);
+
+    const sec_el=document.createElement('section');
+    sec_el.className='section'; sec_el.id=sec.id;
+    const h2=document.createElement('h2');
+    h2.innerHTML = sec.cat+' <span class="cn">'+sec.cn+'</span>'+
+      (sec.type==='optional'?' <span class="tag">OPTIONAL</span>':'');
+    sec_el.appendChild(h2);
+
+    const cnt=document.createElement('div');
+    cnt.className='count'; cnt.textContent=items.length+' item(s)';
+    sec_el.appendChild(cnt);
+
+    const wrap=document.createElement('div'); wrap.className='tablewrap';
+    const table=document.createElement('table');
+    const thead=document.createElement('thead');
+    const htr=document.createElement('tr');
+    COLS.forEach(c=>{const th=document.createElement('th');th.textContent=c.label;htr.appendChild(th);});
+    thead.appendChild(htr); table.appendChild(thead);
+
+    const tbody=document.createElement('tbody');
+    items.forEach(it=>{
+      const tr=document.createElement('tr');
+      COLS.forEach(c=>{
+        const td=document.createElement('td');
+        td.setAttribute('data-label',c.label);
+        if(c.key==='no') td.innerHTML='<span class="no">'+it.no+'</span>';
+        else if(c.key==='cls') td.innerHTML='<span class="cls">'+it.cls+'</span>';
+        else td.textContent=it[c.key];
+        tr.appendChild(td);
+      });
+      tbody.appendChild(tr);
+    });
+    table.appendChild(tbody); wrap.appendChild(table); sec_el.appendChild(wrap);
+    content.appendChild(sec_el);
+  });
+
+  if(total===0){
+    const e=document.createElement('div'); e.className='empty';
+    e.textContent='No matching items.';
+    content.appendChild(e);
+  }
+}
+
+document.getElementById('search').addEventListener('input', render);
+document.getElementById('filter').addEventListener('change', render);
+render();
+</script>
+</body>
+</html>

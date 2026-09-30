@@ -1,0 +1,15 @@
+# Runtime configuration and visitor submissions
+.env
+.env.*
+!.env.example
+_deploy/logs/
+*.log
+
+# Operating-system metadata
+.DS_Store
+Thumbs.db
+
+# Local editor files
+.idea/
+.vscode/
+*.swp
